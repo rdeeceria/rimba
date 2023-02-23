@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Filter Angka Ganjil</title>
+</head>
+
+<body>
+    <div>
+        <input type="number">
+        <button>Proses..</button>
+        <br>
+        <br>
+        <textarea rows="10"></textarea>
+    </div>
+    <script>
+        let input = document.querySelector('input')
+        let btn = document.querySelector('button')
+        let view = document.querySelector('textarea')
+
+        btn.addEventListener("click", () => odd(input.value))
+
+        function odd(value) {
+            value = range(Math.ceil(value)).filter((num) => num % 2 === 1)
+
+            view.value = value
+        }
+
+        function range(num, start = 1) {
+            return Array(num).fill(start).map((x, y) => x + y)
+        }
+
+    </script>
+</body>
+
+</html>

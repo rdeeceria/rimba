@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Sederhana</title>
+    <style>
+        #dashboard {
+            display: none;
+        }
+
+        .error-message {
+            font-size: 10pt;
+            margin: 2px 0px 1em 0px;
+        }
+    </style>
+</head>
+
+<body>
+    <form action="">
+        <section id="login">
+            <div>
+                <input type="text" id="username" placeholder="Username" autocomplete="off">
+                <p class="error-message"></p>
+            </div>
+            <div>
+                <input type="password" id="password" placeholder="Password">
+                <p class="error-message"></p>
+            </div>
+            <button type="submit" id="login">Login..</button>
+        </section>
+
+        <section id="dashboard">
+            <h3>Selamat datang di Dashboard..</h3>
+            <button type="submit" id="logout">Logout..</button>
+        </section>
+    </form>
+    <script>
+        class Login {
+            constructor() {
+                this.form = document.querySelector('form')
+                this.fields = ['username', 'password']
+                this.validateOnSubmit()
+            }
+
+            setStatus(field, message, status) {
+                const errorMessage = field.parentElement.querySelector(".error-message");
+
+                if (status == 'success') {
+                    if (errorMessage) errorMessage.innerText = ''
+                }
+
+                if (status == 'error') errorMessage.innerText = message;
+            }
+
+            validateOnSubmit() {
+                let self = this
+
+                this.form.addEventListener("submit", (e) => {
+                    e.preventDefault()
+                    var error = 0
+
+                    self.fields.forEach((field) => {
+                        const input = document.querySelector(`#${field}`)
+
+                        if (self.validateFields(input) == false) {
+                            error++;
+                        }
+                    });
+
+                    if (error == 0) {
+                        localStorage.setItem("auth", 1)
+                        //this.form.submit()
+                        window.location.reload()
+                    }
+                });
+            }
+
+            validateFields(field) {
+                if (field.value.trim() === "") {
+                    this.setStatus(
+                        field,
+                        'Tidak boleh kosong',
+                        'error'
+                    );
+
+                    return false;
+                } else {
+                    if (field.type == "password") {
+                        if (field.value.length < 6) {
+                            this.setStatus(
+                                field,
+                                'Minimal terdiri dari 6 karakter',
+                                'error'
+                            );
+
+                            return false;
+                        } else {
+                            this.setStatus(field, null, "success");
+                            return true;
+                        }
+                    } else {
+                        this.setStatus(field, null, "success");
+                        return true;
+                    }
+                }
+            }
+        }
+
+        class Auth {
+            constructor() {
+                const auth = localStorage.getItem("auth")
+
+                this.section = {
+                    login: document.querySelector("#login"),
+                    dashboard: document.querySelector('#dashboard'),
+                }
+                this.validateAuth(auth);
+            }
+
+            validateAuth(auth) {
+                let self = this
+
+                if (auth != 1) {
+                    self.section.login.style.display = "block"
+                    self.section.dashboard.style.display = "none"
+                } else {
+                    self.section.login.style.display = "none"
+                    self.section.dashboard.style.display = "block"
+                }
+            }
+
+            logOut() {
+                localStorage.removeItem("auth");
+                window.location.reload()
+            }
+        }
+
+        const app = new Login()
+        const auth = new Auth()
+
+        document.querySelector('#logout').addEventListener("click", (e) => {
+            auth.logOut();
+        });
+    </script>
+</body>
+
+</html>

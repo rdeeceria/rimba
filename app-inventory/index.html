@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
+    <link rel="stylesheet" href="plugins/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="plugins/adminlte/css/adminlte.css">
+    <title>Login App</title>
+</head>
+
+<body class="hold-transition login-page">
+    <div class="login-logo">
+        <b><strong>App.</strong>inventory</b>
+    </div>
+    <div class="login-box">
+        <form action="dashboard.html" method="post">
+            <div class="input-group mb-3">
+                <input type="text" id="username" class="form-control" placeholder="Username" autocomplete="off">
+                <div class="input-group-append">
+                    <div class="input-group-text">
+                        <span class="fas fa-user"></span>
+                    </div>
+                </div>
+                <div class="invalid-feedback"></div>
+            </div>
+            <div class="input-group mb-3">
+                <input type="password" id="password" class="form-control" placeholder="Password">
+                <div class="input-group-append">
+                    <div class="input-group-text">
+                        <span class="fas fa-lock"></span>
+                    </div>
+                </div>
+                <div class="invalid-feedback"></div>
+            </div>
+            <div class="row mb-2">
+                <div class="col-12">
+                    <button type="submit" id="login" class="btn btn-primary btn-block">Login..</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <script src="plugins/jquery/jquery.min.js"></script>
+    <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="plugins/adminlte/js/adminlte.js"></script>
+    <script src="js/login.js"></script>
+
+    <script>
+        new Login()
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Substring Nilai Awal</title>
+</head>
+
+<body>
+    <div>
+        <input type="number">
+        <button>Proses..</button>
+        <br>
+        <br>
+        <textarea rows="10"></textarea>
+    </div>
+    <script>
+        let input = document.querySelector('input')
+        let btn = document.querySelector('button')
+        let view = document.querySelector('textarea')
+
+        btn.addEventListener("click", () => shift(input.value))
+
+        function shift(value) {
+            let output = []
+            value = String(Math.ceil(value))
+            digit = value.length
+
+            for (let i = 0; i < value.length; i++) {
+                (i == 0) ? output.push(value) : output.push(value.substring(i, digit))
+            }
+
+            view.value = output.join("\n")
+        }
+
+    </script>
+</body>
+
+</html>

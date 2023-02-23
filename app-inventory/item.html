@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
+    <link rel="stylesheet" href="plugins/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="plugins/select2/css/select2.min.css">
+    <link rel="stylesheet" href="plugins/select2/css/select2-bootstrap4.min.css">
+    <link rel="stylesheet" href="plugins/cropperjs/cropper.css">
+    <link rel="stylesheet" href="plugins/adminlte/css/adminlte.css">
+    <style>
+        .image-area {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .image-area img#container-img {
+            display: block;
+            max-width: 100%;
+        }
+
+        .cropper-wrapper {
+            overflow: hidden;
+            width: 480px;
+            height: auto;
+        }
+    </style>
+    <title>app-dashboard</title>
+</head>
+
+<body class="hold-transition sidebar-mini">
+    <div class="wrapper">
+
+        <!-- Navbar -->
+        <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+            <!-- Left navbar links -->
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+                </li>
+            </ul>
+
+            <!-- Right navbar links -->
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" data-widget="fullscreen" href="#" role="button">
+                        <i class="fas fa-expand-arrows-alt"></i>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button">
+                        <i class="fas fa-th-large"></i>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        <!-- /.navbar -->
+
+        <!-- Main Sidebar Container -->
+        <aside class="main-sidebar sidebar-dark-primary elevation-4">
+            <!-- Brand Logo -->
+            <a href="#" class="brand-link">
+                <img src="plugins/adminlte/img/AdminLTELogo.png" alt="AdminLTE Logo"
+                    class="brand-image img-circle elevation-3" style="opacity: .8">
+                <span class="brand-text font-weight-light">AdminLTE 3</span>
+            </a>
+
+            <!-- Sidebar -->
+            <div class="sidebar">
+                <!-- Sidebar user panel (optional) -->
+                <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+                    <div class="image">
+                        <img src="plugins/adminlte/img/avatar.png" id="avatarimage" class="img-circle elevation-2"
+                            alt="User Image">
+                    </div>
+                    <div class="info">
+                        <a href="#" id="avatarname" class="d-block">Alexander Pierce</a>
+                    </div>
+                </div>
+
+                <!-- Sidebar Menu -->
+                <nav class="mt-2">
+                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
+                        data-accordion="false">
+                        <!-- Add icons to the links using the .nav-icon class
+                   with font-awesome or any other icon font library -->
+                        <li class="nav-item">
+                            <a href="dashboard.html" class="nav-link">
+                                <i class="nav-icon fas fa-th"></i>
+                                <p>
+                                    Dashboard
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="item.html" class="nav-link active">
+                                <i class="nav-icon fas fa-cog"></i>
+                                <p>
+                                    Items
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-users"></i>
+                                <p>
+                                    Customer
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-coins"></i>
+                                <p>
+                                    Sales
+                                </p>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+                <!-- /.sidebar-menu -->
+            </div>
+            <!-- /.sidebar -->
+        </aside>
+
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+            <!-- Content Header (Page header) -->
+            <div class="content-header">
+                <div class="container-fluid">
+                    <div class="row mb-2">
+                        <div class="col-sm-6">
+                            <h1 class="m-0">Items..</h1>
+                        </div><!-- /.col -->
+                        <div class="col-sm-6">
+                            <ol class="breadcrumb float-sm-right">
+                                <li class="breadcrumb-item"><a href="dashboard.html">Home</a></li>
+                                <li class="breadcrumb-item active">Item</li>
+                            </ol>
+                        </div><!-- /.col -->
+                    </div><!-- /.row -->
+                </div><!-- /.container-fluid -->
+            </div>
+            <!-- /.content-header -->
+
+            <!-- Main content -->
+            <div class="content">
+                <div class="container-fluid">
+
+                    <!-- modal -->
+                    <div class="modal fade" id="modal" data-backdrop="static">
+                        <div class="modal-dialog modal-lg">
+
+                            <div class="modal-content bg-default">
+                                <div class="modal-header">
+                                    <h4 class="modal-title">Tambah Item</h4>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">×</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <input type="hidden" id="key">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="form-group">
+                                                <label for="">Nama</label>
+                                                <input type="text" class="form-control" name="nama" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="">Unit</label>
+                                                <select class="form-control select2" name="unit" style="width:100%"
+                                                    required></select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="">Stok</label>
+                                                <input class="form-control" name="stok" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="">Harga</label>
+                                                <input class="form-control" name="harga" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="">Gambar</label>
+                                                <input type="file" class="form-control-file" name="gambar"
+                                                    id="upload-img" accept="image/jpeg, image/png, image/bmp">
+                                            </div>
+                                            <div class="image-area">
+                                                <div class="cropper-wrapper">
+                                                    <img src="" id="container-img">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <button type="button" class="btn btn-default btn-block" id="clear-img"
+                                                    style="display:none">Hapus Gambar</button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="modal-footer justify-content-between">
+                                    <button type="button" id="closeBtn" class="btn btn-default"
+                                        data-dismiss="modal">Tutup</button>
+                                    <button type="button" id="saveBtn" class="btn btn-success tmb-store"><i
+                                            class="fas fa-save"></i>
+                                        Simpan</button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div><!-- /.modal -->
+
+                    <!-- table -->
+                    <div class="row">
+                        <!-- /.col-md-12 -->
+                        <div class="col-lg-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="card-title col-6 p-0">
+                                        <button type="submit" id="create" class="btn btn-default tmb-create"
+                                            title="Tambah"><i class="fas fa-fw fa-file"></i></button>
+                                        <button type="button" id="refresh" class="btn btn-default tmb-refresh"
+                                            title="Refresh"><i class="fas fa-fw fa-sync"></i></button>
+                                    </div>
+                                </div>
+
+                                <div class="card-body p-0">
+                                    <div class="table-responsive col-lg-12">
+                                        <table class="table table-hover table-bordered text-nowrap">
+                                            <thead>
+                                                <tr>
+                                                    <th class="text-left col-3">Nama</th>
+                                                    <th class="text-left">Unit</th>
+                                                    <th class="text-left">Stok</th>
+                                                    <th class="text-left">Harga</th>
+                                                    <th class="text-left">Gambar</th>
+                                                    <th class="text-left col-1"></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+                                <div class="card-footer clearfix">
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /.col-md-12 -->
+                    </div>
+                    <!-- /.row -->
+                    <!-- /.table -->
+
+                </div><!-- /.container-fluid -->
+            </div>
+            <!-- /.content -->
+        </div>
+        <!-- /.content-wrapper -->
+
+        <!-- Control Sidebar -->
+        <aside class="control-sidebar control-sidebar-dark">
+            <!-- Control sidebar content goes here -->
+            <div class="p-3">
+                <h5>Title</h5>
+                <p>Sidebar content</p>
+                <button type="button" id="logout" class="btn btn-primary btn-block">Logout..</button>
+            </div>
+        </aside>
+        <!-- /.control-sidebar -->
+
+        <!-- Main Footer -->
+        <footer class="main-footer">
+            <!-- To the right -->
+            <div class="float-right d-none d-sm-inline">
+                Anything you want
+            </div>
+            <!-- Default to the left -->
+            <strong>Copyright &copy; 2014-2023 <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights
+            reserved.
+        </footer>
+    </div>
+    <!-- ./wrapper -->
+
+    <!-- REQUIRED SCRIPTS -->
+
+</html>
+
+<script src="plugins/jquery/jquery.min.js"></script>
+<script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="plugins/adminlte/js/adminlte.js"></script>
+<script src="plugins/select2/js/select2.full.min.js"></script>
+<script src="plugins/cropperjs/cropper.js"></script>
+<script src="js/auth.js"></script>
+
+<script>
+    let $createBtn, $saveBtn, $nama, $unit, $stok, $harga, $gambar, $table;
+    let db;
+
+    init();
+
+    async function init() {
+        db = await initDb();
+
+        createBtn = document.querySelector('#create');
+        createBtn.addEventListener('click', () => $('#modal').modal('show'), false);
+
+        $saveBtn = document.querySelector('#saveBtn');
+        $saveBtn.addEventListener('click', saveData, false);
+
+        prepareModal();
+        renderData();
+    }
+
+    function prepareModal() {
+        $nama = document.querySelector('[name=nama]');
+        $unit = document.querySelector('[name=unit]');
+        $stok = document.querySelector('[name=stok]');
+        $harga = document.querySelector('[name=harga]');
+        $gambar = document.querySelector('[name=gambar]');
+        $key = document.querySelector('#key');
+        $table = document.querySelector('table tbody');
+
+        $('[name=unit]').select2({
+            minimumResultsForSearch: Infinity,
+            tags: true,
+            data: ['kg', 'pcs'],
+        });
+
+        prepareGambar();
+    }
+
+    function prepareGambar() {
+        const imgContainer = $('#container-img');
+        const imgInput = $('#upload-img');
+        const imgClear = $('#clear-img');
+
+        imgInput.change(async function (e) {
+            if (e.target.files[0].type.includes('image')) {
+                reader = await loadFile(e.target.files[0]);
+                imgInput.hide();
+                imgClear.show();
+                imgContainer.attr('src', reader);
+                cropper = new Cropper(imgContainer.get(0), {
+                    aspectRatio: 1,
+                    viewMode: 3,
+                });
+            } else {
+                imgInput.val('');
+            }
+        })
+
+        imgClear.click(function (e) {
+            imgContainer.attr('src', '');
+
+            if (cropper !== undefined) {
+                cropper.destroy();
+                cropper = undefined;
+            }
+
+            imgInput.val('').show();
+            imgClear.hide();
+        });
+    }
+
+    async function loadFile(file) {
+        return new Promise((resolve, reject) => {
+            let reader = new FileReader();
+            reader.onload = () => resolve(reader.result);
+            reader.onerror = () => reject(reader.result);
+            reader.readAsDataURL(file);
+        });
+    }
+
+    async function saveData(e) {
+        e.preventDefault();
+
+        let data = {
+            nama: $nama.value,
+            unit: $unit.value,
+            stok: $stok.value,
+            harga: $harga.value,
+            gambar: $gambar.value,
+        };
+
+        if ($key.value) data.id = parseInt($key.value, 10);
+        console.log(data);
+        await persistContact(data);
+
+        $nama.value = '';
+        $unit.value = '';
+        $stok.value = '';
+        $harga.value = '';
+        $gambar.value = '';
+
+        renderData();
+    }
+
+    async function renderData() {
+        let data = await getDataAll();
+        let s = '';
+        data.forEach(d => {
+            s += `
+			<tr>
+			<td>${d.nama}</td>
+			<td>${d.unit}</td>
+			<td>${d.stok}</td>
+			<td>${d.harga}</td>
+			<td><img src="${d.gambar}" alt="Thumbnail" class="img-size-50"></td>
+			<td><button data-key="${d.id}" class="edit">Edit</button> <button data-key="${d.id}" class="delete">Delete</button></td>
+			</tr>`;
+        });
+        $table.innerHTML = s;
+        console.log('data', data);
+
+        let buttons = document.querySelectorAll('td button.edit');
+        buttons.forEach(b => {
+            b.addEventListener('click', fn_edit, false);
+        });
+
+        buttons = document.querySelectorAll('td button.delete');
+        buttons.forEach(b => {
+            b.addEventListener('click', fn_delete, false);
+        });
+    }
+
+    async function getDataAll() {
+        return new Promise((resolve, reject) => {
+            let transaction = db.transaction(['items'], 'readonly');
+
+            transaction.onerror = event => {
+                reject(event);
+            };
+
+            let store = transaction.objectStore('items');
+            store.getAll().onsuccess = event => {
+                resolve(event.target.result);
+            };
+
+        });
+    }
+
+    async function removeData(key) {
+        return new Promise((resolve, reject) => {
+            let transaction = db.transaction(['items'], 'readwrite');
+
+            transaction.oncomplete = event => {
+                resolve();
+            };
+
+            transaction.onerror = event => {
+                reject(event);
+            };
+
+            let store = transaction.objectStore('items');
+            store.delete(key);
+        });
+    }
+
+    async function getData(key) {
+        return new Promise((resolve, reject) => {
+            let transaction = db.transaction(['items'], 'readonly');
+
+            transaction.onerror = event => {
+                reject(event);
+            };
+
+            let store = transaction.objectStore('items');
+            store.get(key).onsuccess = event => {
+                resolve(event.target.result);
+            };
+        });
+    }
+
+    async function fn_edit(e) {
+        let key = parseInt(e.target.dataset.key, 10);
+        console.log('edit', key);
+
+        let data = await getData(key);
+        console.log(data);
+
+        $nama.value = data.nama;
+        $unit.value = data.unit;
+        $stok.value = data.stok;
+        $harga.value = data.harga;
+        $gambar.value = data.gambar;
+    }
+
+    async function fn_delete(e) {
+        let key = parseInt(e.target.dataset.key, 10);
+        console.log('delete', key);
+
+        await removeData(key);
+        renderData();
+    }
+
+    async function initDb() {
+        return new Promise((resolve, reject) => {
+
+            let request = indexedDB.open('inventory', 1);
+
+            request.onerror = event => {
+                alert('Error Event, check console');
+                console.error(event);
+            }
+
+            request.onupgradeneeded = event => {
+                console.log('idb onupgradeneeded firing');
+
+                let db = event.target.result;
+
+                let objectStore = db.createObjectStore('items', { keyPath: 'id', autoIncrement: true });
+                objectStore.createIndex('nama_barang', 'nama_barang', { unique: false });
+            };
+
+            request.onsuccess = event => {
+                resolve(event.target.result);
+            };
+        });
+    }
+
+    async function persist(data) {
+        return new Promise((resolve, reject) => {
+
+            let transaction = db.transaction(['items'], 'readwrite');
+            transaction.oncomplete = event => {
+                resolve();
+            };
+
+            transaction.onerror = event => {
+                reject(event);
+            };
+
+            let store = transaction.objectStore('items');
+            store.put(data);
+        });
+    }
+
+</script>
+
+</body>
+
+</html>
