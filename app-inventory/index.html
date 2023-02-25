@@ -9,6 +9,11 @@
     <link rel="stylesheet" href="plugins/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="plugins/adminlte/css/adminlte.css">
     <title>Login App</title>
+    <style>
+        #deleteDB {
+            display: none;
+        }
+    </style>
 </head>
 
 <body class="hold-transition login-page">
@@ -40,16 +45,41 @@
                     <button type="submit" id="login" class="btn btn-primary btn-block">Login..</button>
                 </div>
             </div>
-        </form>
+            <div class="dropdown-divider"></div>
+            <div class="row mb-2">
+                <div class="col-12">
+                    <button type="button" id="deleteDB" class="btn btn-success btn-block">Hapus
+                        IndexedDB</button>
+                </div>
+            </div>
+    </div>
+    </form>
     </div>
 
     <script src="plugins/jquery/jquery.min.js"></script>
     <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="plugins/adminlte/js/adminlte.js"></script>
+    <script src="js/app.js"></script>
     <script src="js/login.js"></script>
 
     <script>
-        new Login()
+        (async () => {
+            let DBS = await indexedDB.databases();
+            let dbName = DBS.find(DB => DB.name == 'app-inventory');
+
+            if (dbName) {
+                deleteDB.show()
+            }
+        })();
+
+        const AUTH = new Login();
+        const APP = new App();
+        const deleteDB = $('#deleteDB');
+
+        deleteDB.click(function () {
+            APP.deleteDB()
+            deleteDB.hide()
+        })
     </script>
 </body>
 
